@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Utils from './Utils';
 import Colors from './Colors';
 
 const StarMatch = () => {
-  const stars = 6;
+  const [stars, setStars] = useState(Utils.random(1, 9));
   return (
     <div className="game">
       <div className="help">
