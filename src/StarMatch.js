@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Number from './Number';
 import Utils from './Utils';
 import Colors from './Colors';
 
@@ -17,9 +18,7 @@ const StarMatch = () => {
         </div>
         <div className="right">
           {Utils.range(1, 9).map(number => (
-            <button key={number} className="number">
-              {number}
-            </button>
+            <Number key={number} number={number} />
           ))}
         </div>
       </div>
