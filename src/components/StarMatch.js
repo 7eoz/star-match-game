@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import Number from './Number';
-import Utils from './Utils';
-import Colors from './Colors';
+import NumberButton from './NumberButton';
+import StarsDisplay from './StarsDisplay';
+import Utils from '../Utils';
+import Colors from '../Colors';
 
 const StarMatch = () => {
   const [stars, setStars] = useState(Utils.random(1, 9));
@@ -12,13 +13,11 @@ const StarMatch = () => {
       </div>
       <div className="body">
         <div className="left">
-          {Utils.range(1, stars).map(starId => (
-            <div key={starId} className="star" />
-          ))}
+          <StarsDisplay count={stars} />
         </div>
         <div className="right">
           {Utils.range(1, 9).map(number => (
-            <Number key={number} number={number} />
+            <NumberButton key={number} number={number} />
           ))}
         </div>
       </div>
