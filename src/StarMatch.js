@@ -3,6 +3,7 @@ import Utils from './Utils';
 import Colors from './Colors';
 
 const StarMatch = () => {
+  const stars = 5;
   return (
     <div className="game">
       <div className="help">
@@ -10,15 +11,9 @@ const StarMatch = () => {
       </div>
       <div className="body">
         <div className="left">
-          <div className="star" />
-          <div className="star" />
-          <div className="star" />
-          <div className="star" />
-          <div className="star" />
-          <div className="star" />
-          <div className="star" />
-          <div className="star" />
-          <div className="star" />
+          {Utils.range(1, stars).map(starId => (
+            <div className="star" />
+          ))}
         </div>
         <div className="right">
           <button className="number">1</button>
