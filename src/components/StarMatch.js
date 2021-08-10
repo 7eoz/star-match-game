@@ -11,15 +11,15 @@ const StarMatch = () => {
 
   const candidatesAreWrong = Utils.sum(candidateNums) > stars;
 
-  function numberStatus(number) {
+  const numberStatus = number => {
     if (!availableNums.includes(number)) {
       return 'used';
     }
-    if (!candidateNums.includes(number)) {
+    if (candidateNums.includes(number)) {
       return candidatesAreWrong ? 'wrong' : 'candidate';
     }
     return 'available';
-  }
+  };
 
   return (
     <div className="game">
