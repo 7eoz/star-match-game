@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import NumberButton from './NumberButton';
 import StarsDisplay from './StarsDisplay';
 import PlayAgain from './PlayAgain';
@@ -9,9 +9,20 @@ const StarMatch = () => {
   const [stars, setStars] = useState(Utils.random(1, 9));
   const [availableNums, setAvailableNums] = useState(Utils.range(1, 9));
   const [candidateNums, setCandidateNums] = useState([]);
+  const [secondsLeft, setSecondsLeft] = useState(10);
 
   const candidatesAreWrong = Utils.sum(candidateNums) > stars;
-  const gameIsDone = availableNums.length === 0;
+  const gameStatus =
+    availableNums.length === 0 ? 'won' : secondsLeft === 0 ? 'lost' : 'active';
+
+  useEffect(() => {
+    if (secondsLeft > 0) {
+      const timerId = setTimeout(() => {
+        setSecondsLeft(secondsLeft - 1);
+      }, 1000);
+      return () => clearTimeout(timerId);
+    }
+  });
 
   const numberStatus = number => {
     if (!availableNums.includes(number)) {
@@ -21,6 +32,12 @@ const StarMatch = () => {
       return candidatesAreWrong ? 'wrong' : 'candidate';
     }
     return 'available';
+  };
+
+  const resetGame = () => {
+    setStars(Utils.random(1, 9));
+    setAvailableNums(Utils.range(1, 9));
+    setCandidateNums([]);
   };
 
   const onNumberClick = (number, currentStatus) => {
@@ -50,7 +67,11 @@ const StarMatch = () => {
       </div>
       <div className="body">
         <div className="left">
-          {gameIsDone ? <PlayAgain /> : <StarsDisplay count={stars} />}
+          {gameStatus !== 'active' ? (
+            <PlayAgain onClick={resetGame} gameStatus={gameStatus} />
+          ) : (
+            <StarsDisplay count={stars} />
+          )}
         </div>
         <div className="right">
           {Utils.range(1, 9).map(number => (
@@ -63,7 +84,7 @@ const StarMatch = () => {
           ))}
         </div>
       </div>
-      <div className="timer">Time Remaining: 10</div>
+      <div className="timer">Time Remaining: {secondsLeft}</div>
     </div>
   );
 };
