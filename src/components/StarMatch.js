@@ -25,7 +25,10 @@ const StarMatch = () => {
     if (currentStatus === 'used') {
       return;
     }
-    const newCandidateNums = candidateNums.concat(number);
+    const newCandidateNums =
+      currentStatus === 'available'
+        ? candidateNums.concat(number)
+        : candidateNums.filter(cn => cn !== number);
     if (Utils.sum(newCandidateNums) !== stars) {
       setCandidateNums(newCandidateNums);
     } else {
