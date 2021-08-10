@@ -6,8 +6,8 @@ import Colors from '../Colors';
 
 const StarMatch = () => {
   const [stars, setStars] = useState(Utils.random(1, 9));
-  const [availableNums, setAvailableNums] = useState([1, 2, 3, 4, 5]);
-  const [candidateNums, setCandidateNums] = useState([2, 3]);
+  const [availableNums, setAvailableNums] = useState(Utils.range(1, 9));
+  const [candidateNums, setCandidateNums] = useState([]);
 
   const candidatesAreWrong = Utils.sum(candidateNums) > stars;
 
@@ -19,6 +19,23 @@ const StarMatch = () => {
       return candidatesAreWrong ? 'wrong' : 'candidate';
     }
     return 'available';
+  };
+
+  const onNumberClick = (number, currentStatus) => {
+    if (currentStatus === 'used') {
+      return;
+    }
+    const newCandidateNums = candidateNums.concat(number);
+    if (Utils.sum(newCandidateNums) !== stars) {
+      setCandidateNums(newCandidateNums);
+    } else {
+      const newAvailableNums = availableNums.filter(
+        n => !newCandidateNums.includes(n)
+      );
+      setStars(Utils.randomSumIn(newAvailableNums, 9));
+      setAvailableNums(newAvailableNums);
+      setCandidateNums([]);
+    }
   };
 
   return (
@@ -36,6 +53,7 @@ const StarMatch = () => {
               key={number}
               status={numberStatus(number)}
               number={number}
+              onClick={onNumberClick}
             />
           ))}
         </div>

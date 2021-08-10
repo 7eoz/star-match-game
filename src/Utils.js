@@ -19,14 +19,14 @@ const Utils = {
     for (let i = 0; i < arr.length; i++) {
       for (let j = 0, len = sets.length; j < len; j++) {
         const candidateSet = sets[j].concat(arr[i]);
-        const candidateSum = utils.sum(candidateSet);
+        const candidateSum = Utils.sum(candidateSet);
         if (candidateSum <= max) {
           sets.push(candidateSet);
           sums.push(candidateSum);
         }
       }
     }
-    return sums[utils.random(0, sums.length - 1)];
+    return sums[Utils.random(0, sums.length - 1)];
   }
 };
 
